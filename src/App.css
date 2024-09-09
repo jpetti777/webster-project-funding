@@ -220,7 +220,7 @@ textarea {
 }
 
 .next-button {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .previous-button {
@@ -247,14 +247,14 @@ textarea {
   border-radius: 4px;
 }
 
-.callout-box strong {
-  color: #856404;
+.callout-box .important-text {
+  color: #000000;
 }
 
 .anonymous-note {
   color: #6c757d;
   font-style: italic;
-  margin-bottom: 15px;
+  margin: 15px 0;
 }
 
 @media (min-width: 768px) {
