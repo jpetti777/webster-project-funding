@@ -148,38 +148,46 @@ function App() {
               )}
             </header>
           )}
-      <main>
-        {showInstructions ? (
-          <div className="instructions-page">
-            <h1>Macedon NY Forward Project Funding Survey</h1>
-            <h3>Instructions</h3>
-            <p>The Town of Macedon was awareded $4,500,000 from New York State through the NY Forward program to revitalize downtown. Several projects have been proposed for potential funding. In this survey, you will get a budget of $4,500,000 to "spend" on the projects you think will most benefit downtown Macedon. A progress bar at the top of the screen will automatically sum how much money you have spent, and will indicate how much money you have remaining. You will not be able to submit the survey if you spend more than $4,500,000. Please note that you may also leave comments about the projects in the box provided.</p>
-            <h3>How We Will Use This Data</h3>
-            <p>Your responses will be anonymously shared with the Local Planning Committee, which is the committee that will decide which proposed projects to recommend to New York State for potential funding. The next meeting of the Local Planning Committee is Thursday, September 19th at 6:00 PM at Macedon Town Hall (32 W. Main Street). This meeting is open to the public and there will be time reserved at the end of the meeting for a public comment period.</p>
-            <div className="user-input">
-              <input
-                type="text"
-                placeholder="Your Name"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-              />
-              <input
-                type="email"
-                placeholder="Your Email"
-                value={userEmail}
-                onChange={(e) => setUserEmail(e.target.value)}
-              />
-            </div>
-            <button
-              className="next-button"
-              onClick={handleNextPage}
-              disabled={!userName || !userEmail}
-            >
-              Next Page
-            </button>
-            {emailError && <p className="email-error">{emailError}</p>}
-          </div>
-        ) : (
+          <main>
+            {showInstructions ? (
+              <div className="instructions-page">
+                <h1>Macedon NY Forward Project Funding Survey</h1>
+                <h3>Instructions</h3>
+                <p>The Town of Macedon was awarded $4,500,000 from New York State through the NY Forward program to revitalize downtown. Several projects have been proposed for potential funding. In this survey, you will get a budget of $4,500,000 to "spend" on the projects you think will most benefit downtown Macedon. A progress bar at the top of the screen will automatically sum how much money you have spent, and will indicate how much money you have remaining. You will not be able to submit the survey if you spend more than $4,500,000. Please note that you may also leave comments about the projects in the box provided.</p>
+
+                <div className="callout-box">
+                  <strong>Important:</strong> Please complete this survey in one sitting. It should take you approximately 10 minutes to complete. Your progress will NOT be saved if you close or refresh this window before submitting the survey.
+                </div>
+
+                <h3>How We Will Use This Data</h3>
+                <p>Your responses will be anonymously shared with the Local Planning Committee, which is the committee that will decide which proposed projects to recommend to New York State for potential funding. The next meeting of the Local Planning Committee is Thursday, September 19th at 6:00 PM at Macedon Town Hall (32 W. Main Street). This meeting is open to the public and there will be time reserved at the end of the meeting for a public comment period.</p>
+
+                <p className="anonymous-note">Your responses will be anonymous. Your email will not be saved. We only ask for this information to prevent duplicate responses. Thank you for your participation.</p>
+
+                <div className="user-input">
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                  <input
+                    type="email"
+                    placeholder="Your Email"
+                    value={userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
+                  />
+                </div>
+                <button
+                  className="next-button"
+                  onClick={handleNextPage}
+                  disabled={!userName || !userEmail}
+                >
+                  Next Page
+                </button>
+                {emailError && <p className="email-error">{emailError}</p>}
+              </div>
+            ) : (
           <div className="projects-list">
             {projects.map((project, index) => (
               <div key={project.id} className={`project-card ${selectedProjects.includes(project.id) ? 'selected' : ''}`}>
