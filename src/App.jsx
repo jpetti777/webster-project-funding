@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://macedon-project-funding-backend.onrender.com';
+
 const projects = [
   { id: 1, name: "Relocate Ambulance Services Downtown", cost: 1500000, description: "Relocate ambulance services to 79 Main Street, renovate for 2 ambulance bays, offices, and facade upgrade." },
   { id: 2, name: "Revitalize the Former Village Hall", cost: 1000000, description: "Renovate former Village Hall for community space and additional Town offices." },
@@ -76,13 +78,13 @@ function App() {
         selectedProjects,
         comments
       };
-      await axios.post('https://macedon-project-funding-backend.onrender.com', surveyData);
-      alert('Survey submitted successfully!');
-    } catch (error) {
-      console.error('Error submitting survey:', error);
-      alert('Error submitting survey. Please try again.');
-    }
-  };
+      await axios.post(`${API_URL}/api/submit-survey`, surveyData);
+          alert('Survey submitted successfully!');
+        } catch (error) {
+          console.error('Error submitting survey:', error);
+          alert('Error submitting survey. Please try again.');
+        }
+      };
 
   return (
     <div className="App">
