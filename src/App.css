@@ -61,6 +61,7 @@ h1 {
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .submit-button:disabled {
@@ -68,8 +69,19 @@ h1 {
   cursor: not-allowed;
 }
 
+.submit-button.submitted {
+  background-color: #888888;
+  cursor: default;
+}
+
 .error-message {
   color: #F44336;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.success-message {
+  color: #4CAF50;
   margin-top: 10px;
   font-weight: bold;
 }

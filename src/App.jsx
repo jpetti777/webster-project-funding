@@ -29,6 +29,7 @@ function App() {
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const totalCost = selectedProjects.reduce((sum, id) => sum + projects.find(p => p.id === id).cost, 0);
@@ -72,6 +73,8 @@ function App() {
   };
 
   const handleSubmit = async () => {
+    if (isSubmitted) return; // Prevent multiple submissions
+
     try {
       const surveyData = {
         userName,
@@ -82,15 +85,14 @@ function App() {
 
       console.log('Submitting survey data:', surveyData);
       console.log('API URL:', API_URL);
-
       const response = await axios.post(`${API_URL}/api/submit-survey`, surveyData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
       console.log('Survey submission response:', response.data);
       alert('Survey submitted successfully!');
+      setIsSubmitted(true); // Set the submitted state to true
     } catch (error) {
       console.error('Error submitting survey:', error);
       if (error.response) {
@@ -106,41 +108,46 @@ function App() {
     }
   };
 
-  return (
-    <div className="App">
-      {!showInstructions && (
-        <header className="sticky-header">
-          <h1>Macedon NY Forward Project Funding Survey</h1>
-          <div className="budget-container">
-            <div className="budget-info">
-              <span><strong>Total Budget:</strong> ${(4500000).toLocaleString()}</span>
-              <span><strong>Remaining:</strong> ${remainingBudget.toLocaleString()}</span>
-            </div>
-            <div className="progress-container">
-              <div className="progress-bar">
-                <div style={getProgressBarStyle()}></div>
+      return (
+        <div className="App">
+          {!showInstructions && (
+            <header className="sticky-header">
+              <h1>Macedon NY Forward Project Funding Survey</h1>
+              <div className="budget-container">
+                <div className="budget-info">
+                  <span><strong>Total Budget:</strong> ${(4500000).toLocaleString()}</span>
+                  <span><strong>Remaining:</strong> ${remainingBudget.toLocaleString()}</span>
+                </div>
+                <div className="progress-container">
+                  <div className="progress-bar">
+                    <div style={getProgressBarStyle()}></div>
+                  </div>
+                </div>
+                <button 
+                  className={`submit-button ${isSubmitted ? 'submitted' : ''}`}
+                  onClick={handleSubmit} 
+                  disabled={remainingBudget < 0 || selectedProjects.length === 0 || isSubmitted}
+                >
+                  {isSubmitted ? 'Submitted' : 'Submit'}
+                </button>
               </div>
-            </div>
-            <button 
-              className="submit-button" 
-              onClick={handleSubmit} 
-              disabled={remainingBudget < 0 || selectedProjects.length === 0}
-            >
-              Submit
-            </button>
-          </div>
-          {remainingBudget < 0 && (
-            <div className="error-message">
-              You have exceeded the $4,500,000 budget. Please deselect some projects.
-            </div>
+              {remainingBudget < 0 && (
+                <div className="error-message">
+                  You have exceeded the $4,500,000 budget. Please deselect some projects.
+                </div>
+              )}
+              {selectedProjects.length === 0 && !isSubmitted && (
+                <div className="error-message">
+                  Please select at least one project before submitting.
+                </div>
+              )}
+              {isSubmitted && (
+                <div className="success-message">
+                  Thank you for your submission! You may now close this page.
+                </div>
+              )}
+            </header>
           )}
-          {selectedProjects.length === 0 && (
-            <div className="error-message">
-              Please select at least one project before submitting.
-            </div>
-          )}
-        </header>
-      )}
       <main>
         {showInstructions ? (
           <div className="instructions-page">
