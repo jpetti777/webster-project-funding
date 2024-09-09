@@ -6,5 +6,13 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: '0.0.0.0',
-  }
+  },
+  optimizeDeps: {
+    include: ['axios']
+  },
+  build: {
+    commonjsOptions: {
+      include: ['node_modules/**'],
+    },
+  },
 })
