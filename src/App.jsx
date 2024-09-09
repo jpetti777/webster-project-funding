@@ -78,13 +78,20 @@ function App() {
         selectedProjects,
         comments
       };
-      await axios.post(`${API_URL}/api/submit-survey`, surveyData);
-          alert('Survey submitted successfully!');
-        } catch (error) {
-          console.error('Error submitting survey:', error);
-          alert('Error submitting survey. Please try again.');
-        }
-      };
+
+      const response = await axios.post(`${API_URL}/api/submit-survey`, surveyData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Survey submission response:', response.data);
+      alert('Survey submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting survey:', error);
+      alert('Error submitting survey. Please try again.');
+    }
+  };
 
   return (
     <div className="App">
