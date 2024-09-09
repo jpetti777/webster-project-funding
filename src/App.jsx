@@ -67,9 +67,20 @@ function App() {
     setShowInstructions(true);
   };
 
-  const handleSubmit = () => {
-    // Handle submission logic here
-    console.log('Survey submitted');
+  const handleSubmit = async () => {
+    try {
+      const surveyData = {
+        userName,
+        userEmail,
+        selectedProjects,
+        comments
+      };
+      await axios.post('https://macedon-project-funding-backend.onrender.com', surveyData);
+      alert('Survey submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting survey:', error);
+      alert('Error submitting survey. Please try again.');
+    }
   };
 
   return (
