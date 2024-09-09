@@ -121,11 +121,22 @@ function App() {
                 <div style={getProgressBarStyle()}></div>
               </div>
             </div>
-            <button className="submit-button" onClick={handleSubmit} disabled={remainingBudget < 0}>Submit</button>
+            <button 
+              className="submit-button" 
+              onClick={handleSubmit} 
+              disabled={remainingBudget < 0 || selectedProjects.length === 0}
+            >
+              Submit
+            </button>
           </div>
           {remainingBudget < 0 && (
             <div className="error-message">
               You have exceeded the $4,500,000 budget. Please deselect some projects.
+            </div>
+          )}
+          {selectedProjects.length === 0 && (
+            <div className="error-message">
+              Please select at least one project before submitting.
             </div>
           )}
         </header>
