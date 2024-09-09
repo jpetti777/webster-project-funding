@@ -153,7 +153,9 @@ function App() {
           <div className="instructions-page">
             <h1>Macedon NY Forward Project Funding Survey</h1>
             <h3>Instructions</h3>
-            <p><strong>Placeholder for now.</strong></p>
+            <p>The Town of Macedon was awareded $4,500,000 from New York State through the NY Forward program to revitalize downtown. Several projects have been proposed for potential funding. In this survey, you will get a budget of $4,500,000 to "spend" on the projects you think will most benefit downtown Macedon. A progress bar at the top of the screen will automatically sum how much money you have spent, and will indicate how much money you have remaining. You will not be able to submit the survey if you spend more than $4,500,000. Please note that you may also leave comments about the projects in the box provided.</p>
+            <h3>How We Will Use This Data</h3>
+            <p>Your responses will be anonymously shared with the Local Planning Committee, which is the committee that will decide which proposed projects to recommend to New York State for potential funding. The next meeting of the Local Planning Committee is Thursday, September 19th at 6:00 PM at Macedon Town Hall (32 W. Main Street). This meeting is open to the public and there will be time reserved at the end of the meeting for a public comment period.</p>
             <div className="user-input">
               <input
                 type="text"
