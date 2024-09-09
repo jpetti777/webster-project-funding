@@ -115,26 +115,38 @@ h1 {
   padding: 15px;
 }
 
-.project-number, .project-location {
+.project-number {
   font-size: 14px;
   color: #888;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 
 h3 {
   color: #333;
-  margin-top: 0;
+  margin: 0 0 2px 0;
   font-size: 18px;
-  margin-bottom: 5px;
 }
 
-.project-description, .project-total-cost, .project-cost {
-  font-size: 16px;
-  margin-bottom: 10px;
+.project-location {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 12px;
 }
 
 .project-description {
+  font-size: 16px;
   color: #333;
+  margin-bottom: 16px;
+  padding: 8px 0;
+}
+
+.project-total-cost, .project-cost {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.project-cost {
+  margin-bottom: 16px;
 }
 
 .fund-checkbox {
