@@ -21,6 +21,10 @@ function App() {
   const [selectedProjects, setSelectedProjects] = useState([]);
   const [remainingBudget, setRemainingBudget] = useState(4500000);
   const [comments, setComments] = useState({});
+  const [showInstructions, setShowInstructions] = useState(true);
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   useEffect(() => {
     const totalCost = selectedProjects.reduce((sum, id) => sum + projects.find(p => p.id === id).cost, 0);
@@ -50,47 +54,109 @@ function App() {
     };
   };
 
+  const handleNextPage = () => {
+    if (userEmail.includes('@')) {
+      setShowInstructions(false);
+      setEmailError('');
+    } else {
+      setEmailError('Please enter a valid email address');
+    }
+  };
+
+  const handlePreviousPage = () => {
+    setShowInstructions(true);
+  };
+
+  const handleSubmit = () => {
+    // Handle submission logic here
+    console.log('Survey submitted');
+  };
+
   return (
     <div className="App">
-      <header className="sticky-header">
-        <div className="budget-info">
-          <span>Total Budget: ${(4500000).toLocaleString()}</span>
-          <span>Remaining: ${remainingBudget.toLocaleString()}</span>
-        </div>
-        <div className="progress-bar">
-          <div style={getProgressBarStyle()}></div>
-        </div>
-      </header>
-      <main>
-        <h1>Macedon Project Funding Selection</h1>
-        <div className="projects-list">
-          {projects.map(project => (
-            <div key={project.id} className={`project-card ${selectedProjects.includes(project.id) ? 'selected' : ''}`}>
-              <div className="project-image">
-                <img src={`https://picsum.photos/seed/${project.id}/300/200`} alt={project.name} />
-              </div>
-              <div className="project-content">
-                <h3>{project.name}</h3>
-                <p className="project-description">{project.description}</p>
-                <p className="project-cost">Cost: ${project.cost.toLocaleString()}</p>
-                <div className="fund-checkbox">
-                  <input
-                    type="checkbox"
-                    id={`fund-${project.id}`}
-                    checked={selectedProjects.includes(project.id)}
-                    onChange={() => handleProjectToggle(project.id)}
-                  />
-                  <label htmlFor={`fund-${project.id}`}>Fund this Project</label>
-                </div>
-                <textarea
-                  value={comments[project.id] || ''}
-                  onChange={(e) => handleCommentChange(project.id, e.target.value)}
-                  placeholder="Add your comments here..."
-                />
-              </div>
+      {!showInstructions && (
+        <header className="sticky-header">
+          <h1>Macedon NY Forward Project Funding Survey</h1>
+          <div className="budget-container">
+            <div className="budget-info">
+              <span><strong>Total Budget:</strong> ${(4500000).toLocaleString()}</span>
+              <span><strong>Remaining:</strong> ${remainingBudget.toLocaleString()}</span>
             </div>
-          ))}
-        </div>
+            <div className="progress-container">
+              <div className="progress-bar">
+                <div style={getProgressBarStyle()}></div>
+              </div>
+              <button className="submit-button" onClick={handleSubmit} disabled={remainingBudget < 0}>Submit</button>
+            </div>
+          </div>
+          {remainingBudget < 0 && (
+            <div className="error-message">
+              You have exceeded the $4,500,000 budget. Please deselect some projects.
+            </div>
+          )}
+        </header>
+      )}
+      <main>
+        {showInstructions ? (
+          <div className="instructions-page">
+            <h1>Macedon NY Forward Project Funding Survey</h1>
+            <h3>Instructions</h3>
+            <p><strong>Placeholder for now.</strong></p>
+            <div className="user-input">
+              <input 
+                type="text" 
+                placeholder="Your Name" 
+                value={userName} 
+                onChange={(e) => setUserName(e.target.value)} 
+              />
+              <input 
+                type="email" 
+                placeholder="Your Email" 
+                value={userEmail} 
+                onChange={(e) => setUserEmail(e.target.value)} 
+              />
+            </div>
+            <button 
+              className="next-button" 
+              onClick={handleNextPage} 
+              disabled={!userName || !userEmail}
+            >
+              Next Page
+            </button>
+            {emailError && <p className="email-error">{emailError}</p>}
+          </div>
+        ) : (
+          <div className="projects-list">
+            {projects.map((project, index) => (
+              <div key={project.id} className={`project-card ${selectedProjects.includes(project.id) ? 'selected' : ''}`}>
+                <div className="project-image">
+                  <img src={`https://picsum.photos/seed/${project.id}/300/200`} alt={project.name} />
+                </div>
+                <div className="project-content">
+                  <p className="project-number">Project {index + 1} of 13</p>
+                  <h3>{project.name}</h3>
+                  <p className="project-description">{project.description}</p>
+                  <p className="project-cost">Cost: ${project.cost.toLocaleString()}</p>
+                  <div className="fund-checkbox">
+                    <input
+                      type="checkbox"
+                      id={`fund-${project.id}`}
+                      checked={selectedProjects.includes(project.id)}
+                      onChange={() => handleProjectToggle(project.id)}
+                    />
+                    <label htmlFor={`fund-${project.id}`}>Fund this Project</label>
+                  </div>
+                  <textarea
+                    value={comments[project.id] || ''}
+                    onChange={(e) => handleCommentChange(project.id, e.target.value)}
+                    placeholder="Add your comments here..."
+                  />
+                </div>
+              </div>
+            ))}
+            <button className="previous-button" onClick={handlePreviousPage}>Previous Page</button>
+          </div>
+        )}
       </main>
     </div>
   );
