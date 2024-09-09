@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://macedon-project-funding-backend.onrender.com';
+console.log('API_URL:', API_URL);
 
 const projects = [
   { id: 1, name: "Relocate Ambulance Services Downtown", cost: 1500000, description: "Relocate ambulance services to 79 Main Street, renovate for 2 ambulance bays, offices, and facade upgrade." },
@@ -35,8 +36,8 @@ function App() {
   }, [selectedProjects]);
 
   const handleProjectToggle = (projectId) => {
-    setSelectedProjects(prev => 
-      prev.includes(projectId) 
+    setSelectedProjects(prev =>
+      prev.includes(projectId)
         ? prev.filter(id => id !== projectId)
         : [...prev, projectId]
     );
@@ -79,6 +80,9 @@ function App() {
         comments
       };
 
+      console.log('Submitting survey data:', surveyData);
+      console.log('API URL:', API_URL);
+
       const response = await axios.post(`${API_URL}/api/submit-survey`, surveyData, {
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +93,16 @@ function App() {
       alert('Survey submitted successfully!');
     } catch (error) {
       console.error('Error submitting survey:', error);
-      alert('Error submitting survey. Please try again.');
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error setting up request:', error.message);
+      }
+      alert(`Error submitting survey: ${error.message}. Please check console for more details.`);
     }
   };
 
@@ -124,22 +137,22 @@ function App() {
             <h3>Instructions</h3>
             <p><strong>Placeholder for now.</strong></p>
             <div className="user-input">
-              <input 
-                type="text" 
-                placeholder="Your Name" 
-                value={userName} 
-                onChange={(e) => setUserName(e.target.value)} 
+              <input
+                type="text"
+                placeholder="Your Name"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
               />
-              <input 
-                type="email" 
-                placeholder="Your Email" 
-                value={userEmail} 
-                onChange={(e) => setUserEmail(e.target.value)} 
+              <input
+                type="email"
+                placeholder="Your Email"
+                value={userEmail}
+                onChange={(e) => setUserEmail(e.target.value)}
               />
             </div>
-            <button 
-              className="next-button" 
-              onClick={handleNextPage} 
+            <button
+              className="next-button"
+              onClick={handleNextPage}
               disabled={!userName || !userEmail}
             >
               Next Page
