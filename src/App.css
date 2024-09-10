@@ -277,21 +277,40 @@ textarea {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
   }
 
   main {
-    flex: 1;
+    flex: 1 0 auto;
   }
 
   .footer {
+    flex-shrink: 0;
     background-color: #f0f0f0;
     padding: 10px 0;
     text-align: center;
     margin-top: 20px;
+    width: 100%;
   }
 
   .footer p {
     margin: 0;
     font-size: 12px;
     color: #666;
+  }
+
+  /* Add this media query for mobile devices */
+  @media (max-width: 767px) {
+    .App {
+      padding: 10px;
+    }
+
+    .footer {
+      margin-top: 10px;
+      margin-left: -10px;
+      margin-right: -10px;
+      width: calc(100% + 20px);
+    }
   }

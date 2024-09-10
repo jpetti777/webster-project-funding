@@ -59,10 +59,15 @@ function App() {
     };
   };
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   const handleNextPage = () => {
     if (userEmail.includes('@')) {
       setShowInstructions(false);
       setEmailError('');
+      scrollToTop();
     } else {
       setEmailError('Please enter a valid email address.');
     }
@@ -70,6 +75,7 @@ function App() {
 
   const handlePreviousPage = () => {
     setShowInstructions(true);
+    scrollToTop();
   };
 
   const handleSubmit = async () => {
