@@ -233,6 +233,7 @@ function App() {
         )}
           </main>
                 <footer className="footer">
+                  <p>Macedon NY Forward</p>
                 </footer>
               </div>
             );
