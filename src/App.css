@@ -272,4 +272,26 @@ textarea {
   .project-content {
     width: 70%;
   }
-}
+
+  .App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  .footer {
+    background-color: #f0f0f0;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .footer p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+  }
