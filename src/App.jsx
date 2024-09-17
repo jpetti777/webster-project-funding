@@ -183,10 +183,10 @@ function App() {
             </div>
 
             <h3>How We Will Use This Data</h3>
-            <p>Your responses will be anonymously shared with the Local Planning Committee, which is the committee that will decide which proposed projects get recommended to New York State for potential funding. The next meeting of the Local Planning Committee is Thursday, September 19th at 6:00 PM at Webster Village Hall (28 W. Main Street). This meeting is open to the public and there will be time reserved at the end of the meeting for a public comment period.</p>
+            <p>Your responses will be anonymously shared with the Local Planning Committee, which is the committee that will decide which proposed projects get recommended to New York State for potential funding. The next meeting of the Local Planning Committee is Wednesday, October 9th at 6:00 PM at the Village of Webster Community Meeting Hall (29 South Avenue). This meeting is open to the public and there will be time reserved at the end of the meeting for a public comment period.</p>
 
             <h3>Due Date</h3>
-            <p>This survey will close on Tuesday, September 17th at 11:59 PM.</p>
+            <p>This survey will close on Friday, October 4th at 11:59 PM.</p>
 
             <div className="user-input">
               <input
