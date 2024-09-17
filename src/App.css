@@ -8,6 +8,9 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .sticky-header {
@@ -100,11 +103,13 @@ h1 {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin-bottom: 20px;
 }
 
 .project-card:hover {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
 }
 
 .project-card.selected {
@@ -114,71 +119,81 @@ h1 {
 
 .project-image {
   width: 100%;
-  height: 200px;
+  height: 250px;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .project-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.project-image:hover img {
+  transform: scale(1.05);
 }
 
 .project-content {
-  padding: 15px;
+  padding: 20px;
 }
 
 .project-number {
-  font-size: 12px;
+  font-size: 14px;
   color: #888;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
 }
 
 h3 {
   color: #333;
-  margin: 0 0 0 0;
-  font-size: 18px;
+  margin: 0 0 10px 0;
+  font-size: 22px;
 }
 
 .project-location {
-  font-size: 12px;
-  color: #888;
-  margin-bottom: 12px;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
 }
 
 .project-description {
   font-size: 16px;
   color: #333;
-  margin-bottom: 16px;
-  padding: 8px 0;
+  margin-bottom: 20px;
+  line-height: 1.6;
 }
 
 .project-total-cost, .project-cost {
-  font-size: 16px;
-  margin-bottom: 0px;
-}
-
-.project-cost {
-  margin-bottom: 12px;
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 
 .fund-checkbox {
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 .fund-checkbox input {
   margin-right: 10px;
+  transform: scale(1.2);
+}
+
+.fund-checkbox label {
+  font-size: 18px;
+  cursor: pointer;
 }
 
 textarea {
   width: 100%;
-  height: 60px;
-  margin-top: 10px;
+  height: 80px;
+  margin-top: 15px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 5px;
+  padding: 10px;
   font-family: Arial, sans-serif;
+  font-size: 16px;
 }
 
 .instructions-page {
@@ -258,59 +273,99 @@ textarea {
   margin: 15px 0;
 }
 
+.footer {
+  flex-shrink: 0;
+  background-color: #f0f0f0;
+  padding: 10px 0;
+  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+}
+
+/* Full-size image modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 1000px;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 @media (min-width: 768px) {
   .project-card {
     flex-direction: row;
   }
 
   .project-image {
-    width: 30%;
-    min-width: 200px;
+    width: 40%;
     height: auto;
   }
 
   .project-content {
-    width: 70%;
+    width: 60%;
   }
+}
 
+@media (max-width: 767px) {
   .App {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
   }
 
-  main {
-    flex: 1 0 auto;
+  .sticky-header {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .budget-info {
+    font-size: 16px;
+  }
+
+  .submit-button {
+    font-size: 14px;
+    padding: 8px 16px;
   }
 
   .footer {
-    flex-shrink: 0;
-    background-color: #f0f0f0;
-    padding: 10px 0;
-    text-align: center;
-    margin-top: 20px;
-    width: 100%;
+    margin-top: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    width: calc(100% + 20px);
   }
-
-  .footer p {
-    margin: 0;
-    font-size: 12px;
-    color: #666;
-  }
-
-  /* Add this media query for mobile devices */
-  @media (max-width: 767px) {
-    .App {
-      padding: 10px;
-    }
-
-    .footer {
-      margin-top: 10px;
-      margin-left: -10px;
-      margin-right: -10px;
-      width: calc(100% + 20px);
-    }
-  }
+}

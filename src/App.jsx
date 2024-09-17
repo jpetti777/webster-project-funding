@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://macedon-project-funding-backend.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL || 'https://webster-project-funding-backend.onrender.com';
 console.log('API_URL:', API_URL);
 
 const projects = [
@@ -38,6 +38,7 @@ function App() {
   const [userEmail, setUserEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
 
   useEffect(() => {
     const totalCost = selectedProjects.reduce((sum, id) => sum + projects.find(p => p.id === id).cost, 0);
@@ -120,6 +121,14 @@ function App() {
       }
       alert(`Error submitting survey: ${error.message}. Please check console for more details.`);
     }
+  };
+
+  const openModal = (imagePath) => {
+    setModalImage(imagePath);
+  };
+
+  const closeModal = () => {
+    setModalImage(null);
   };
 
   return (
@@ -205,46 +214,53 @@ function App() {
             </button>
             {emailError && <p className="email-error">{emailError}</p>}
           </div>
-        ) : (
-          <div className="projects-list">
-            {projects.map((project, index) => (
-              <div key={project.id} className={`project-card ${selectedProjects.includes(project.id) ? 'selected' : ''}`}>
-                <div className="project-image">
-                  <img src={project.imagePath} alt={project.name} />
-                </div>
-                <div className="project-content">
-                  <p className="project-number">Project {index + 1} of {projects.length}</p>
-                  <h3>{project.name}</h3>
-                  <p className="project-location">{project.location}</p>
-                  <p className="project-description">{project.description}</p>
-                  <p className="project-total-cost">Total Project Cost: ${project.totalCost.toLocaleString()}</p>
-                  <p className="project-cost"><strong>Funding Request: ${project.cost.toLocaleString()}</strong></p>
-                  <div className="fund-checkbox">
-                    <input
-                      type="checkbox"
-                      id={`fund-${project.id}`}
-                      checked={selectedProjects.includes(project.id)}
-                      onChange={() => handleProjectToggle(project.id)}
-                    />
-                    <label htmlFor={`fund-${project.id}`}>Fund this Project</label>
-                  </div>
-                  <textarea
-                    value={comments[project.id] || ''}
-                    onChange={(e) => handleCommentChange(project.id, e.target.value)}
-                    placeholder="Add your comments here..."
-                  />
-                </div>
-              </div>
-            ))}
-            <button className="previous-button" onClick={handlePreviousPage}>Previous Page</button>
+) : (
+  <div className="projects-list">
+    {projects.map((project, index) => (
+      <div key={project.id} className={`project-card ${selectedProjects.includes(project.id) ? 'selected' : ''}`}>
+        <div className="project-image" onClick={() => openModal(project.imagePath)}>
+          <img src={project.imagePath} alt={project.name} />
+        </div>
+        <div className="project-content">
+          <p className="project-number">Project {index + 1} of {projects.length}</p>
+          <h3>{project.name}</h3>
+          <p className="project-location">{project.location}</p>
+          <p className="project-description">{project.description}</p>
+          <p className="project-total-cost">Total Project Cost: ${project.totalCost.toLocaleString()}</p>
+          <p className="project-cost"><strong>Funding Request: ${project.cost.toLocaleString()}</strong></p>
+          <div className="fund-checkbox">
+            <input
+              type="checkbox"
+              id={`fund-${project.id}`}
+              checked={selectedProjects.includes(project.id)}
+              onChange={() => handleProjectToggle(project.id)}
+            />
+            <label htmlFor={`fund-${project.id}`}>Fund this Project</label>
           </div>
-        )}
-      </main>
-      <footer className="footer">
-        <p>Webster NY Forward</p>
-      </footer>
-    </div>
-  );
+          <textarea
+            value={comments[project.id] || ''}
+            onChange={(e) => handleCommentChange(project.id, e.target.value)}
+            placeholder="Add your comments here..."
+          />
+        </div>
+      </div>
+    ))}
+    <button className="previous-button" onClick={handlePreviousPage}>Previous Page</button>
+  </div>
+)}
+</main>
+<footer className="footer">
+<p>Webster NY Forward</p>
+</footer>
+
+{modalImage && (
+<div className="modal" onClick={closeModal}>
+  <span className="close" onClick={closeModal}>&times;</span>
+  <img className="modal-content" src={modalImage} alt="Full size project image" />
+</div>
+)}
+</div>
+);
 }
 
 export default App;
